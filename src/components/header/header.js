@@ -1,5 +1,5 @@
 import React from "react";
-import NewTaskForm from "./new-task-form";
+import NewTaskForm from "../new-task-form";
 import './header.css';
 
 const Header = () => {
