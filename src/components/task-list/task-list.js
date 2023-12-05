@@ -3,13 +3,17 @@ import Task from "../task";
 
 import './task-list.css';
 
-const TaskList = ({ todos }) => {
+const TaskList = ({ todos, onDeleted }) => {
 
     const elements = todos.map((item) => {
-        const { id, ...itemProps } = item;
-    
+
+        let { id, classNames, ...itemProps } = item;
+        
         return (
-            <Task {...itemProps } />
+            <span key={id} className={classNames}>
+            <Task {...itemProps } 
+                onDeleted={() => onDeleted(id)} />
+            </span>
         );
       });
 
