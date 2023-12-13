@@ -4,23 +4,9 @@ import './task.css';
 
 export default class Task extends Component{
 
-    state = {
-        completed: false,
-        editing: false,
-    };
-
-    onLabelClick = () => {
-        this.setState(({completed}) => {
-            return {
-                completed: !completed
-            }
-        });
-    };
-
     render() {
 
-        const { label, onDeleted } = this.props;
-        const { completed } = this.state;
+        const { label, onDeleted, onToggleCompleted, completed } = this.props;
 
         let classNames = '';
         if (completed) {
@@ -31,7 +17,7 @@ export default class Task extends Component{
             <li className={classNames}>
                 <div className="view">
                 <input className="toggle" type="checkbox" 
-                    onClick={ this.onLabelClick } />
+                    onClick={ onToggleCompleted } />
                 <label>
                     <span className="description">{ label }</span> 
                     <span className="created">
