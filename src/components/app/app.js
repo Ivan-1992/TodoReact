@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-// import { createRoot } from 'react-dom/client';
 
 import Footer from '../footer';
 import TaskList from '../task-list';
 import NewTaskForm from '../new-task-form';
+
 
 import './app.css';
 
@@ -11,20 +11,19 @@ export default class App extends Component {
     maxId = 100;
 
     state = {
-        todoData: [
-          this.createTodoItem('Todo 1'),
-          this.createTodoItem('Todo 2'),
-          this.createTodoItem('Todo 3'),
-          ],
+        todoData: [],
         term: '',
         filter: 'all'
     };
-  
+    
+
     createTodoItem(label) {
       return {
         label,
         completed: false,
-        id: this.maxId++
+        editing: false,
+        id: this.maxId++,
+        date: new Date()
       }
     }
 
@@ -122,9 +121,9 @@ export default class App extends Component {
     const doneCount = todoData.filter((el) => el.completed).length;
 
     const todoCount = todoData.length - doneCount;
-
     return (
         <section className="todoapp">
+
         <NewTaskForm onItemAdded={this.addItem} />
         <section className="main">
           <TaskList todos={visibleItems}
@@ -141,8 +140,3 @@ export default class App extends Component {
       );
     }
   };
-  
-// const root = ReactDOM.createRoot(document.getElementById('root'));
-// root.render(
-//   <App />
-// );

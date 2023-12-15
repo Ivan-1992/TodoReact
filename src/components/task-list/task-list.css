@@ -4,7 +4,7 @@
 }
 
 .todo-list li.editing .view {
-	display: none;
+	display: block;
 }
 
 .todo-list li .toggle {

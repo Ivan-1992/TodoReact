@@ -1,6 +1,9 @@
 import React, { Component } from "react";
-import './footer.css';
+import PropTypes from 'prop-types';
+
 import TaskFilter from "../task-filter";
+
+import './footer.css';
 
 export default class Footer extends Component {
 
@@ -19,4 +22,16 @@ export default class Footer extends Component {
             </footer>
         );
     }
+};
+
+Footer.defaultProps = {
+    filter: 'All',
+    todoDone: 0
+}
+
+Footer.propTypes = {
+    todoDone: PropTypes.number,
+    filter: PropTypes.string,
+    clearCompleted: PropTypes.func,
+    onFilterChange: PropTypes.func
 }
