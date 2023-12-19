@@ -14,7 +14,11 @@ export default class NewTaskForm extends Component {
 
   onSubmit = (e) => {
     e.preventDefault()
-    this.props.onItemAdded(this.state.label)
+    if (this.state.label.trim()) {
+      this.props.onItemAdded(this.state.label)
+    } else {
+      alert('Строка не может состоять из пробелов')
+    }
     this.setState({
       label: '',
     })

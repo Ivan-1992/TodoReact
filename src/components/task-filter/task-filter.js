@@ -4,6 +4,15 @@ import PropTypes from 'prop-types'
 import './task-filter.css'
 
 export default class TaskFilter extends Component {
+  static defaultProps = {
+    filter: 'All',
+  }
+
+  static propTypes = {
+    filter: PropTypes.string,
+    onFilterChange: PropTypes.func.isRequired,
+  }
+
   buttons = [
     { name: 'all', label: 'All' },
     { name: 'active', label: 'Active' },
@@ -26,13 +35,4 @@ export default class TaskFilter extends Component {
     })
     return <ul className="filters">{buttons}</ul>
   }
-}
-
-TaskFilter.defaultProps = {
-  filter: 'All',
-}
-
-TaskFilter.propTypes = {
-  filter: PropTypes.string,
-  onFilterChange: PropTypes.func.isRequired,
 }
