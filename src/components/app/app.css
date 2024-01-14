@@ -160,3 +160,9 @@ body {
 .info a:hover {
 	text-decoration: underline;
 }
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	.toggle-all {
+		background: none;
+	}
+}
