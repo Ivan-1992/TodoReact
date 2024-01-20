@@ -10,6 +10,7 @@ const App = () => {
   const [term] = useState('')
   const [filter, setFilter] = useState('all')
   const [isTimerOn, setIsTimerOn] = useState(false)
+  const [activeTimers, setActiveTimers] = useState([])
 
   const ref = useRef()
 
@@ -23,7 +24,6 @@ const App = () => {
       minutes,
       seconds,
       completed: false,
-      editing: false,
       id: Math.floor(Math.random() * 100),
       date: new Date(),
     }
@@ -83,36 +83,42 @@ const App = () => {
   }
 
   const onStartTimer = (id) => {
-    if (!isTimerOn) {
-      setIsTimerOn(true)
-      ref.current = setInterval(() => {
-        setTodoData((data) => {
-          const idx = data.findIndex((elem) => elem.id === id)
-          if (idx === -1) {
-            clearInterval(ref.current)
-            setIsTimerOn(false)
-            return [...data]
-          }
-          const oldItem = data[idx]
-          let newItem = { ...oldItem, seconds: oldItem.seconds - 1 }
-          if (newItem.seconds < 0) {
-            newItem = { ...newItem, minutes: oldItem.minutes - 1, seconds: 59 }
-          }
-          if (newItem.seconds === 0 && newItem.minutes === 0) {
-            clearInterval(ref.current)
-            setIsTimerOn(false)
-          }
-          return [...data.slice(0, idx), newItem, ...data.slice(idx + 1)]
-        })
-      }, 1000)
+    const timer = activeTimers.find((timer) => timer.id === id)
+    if (!timer || !isTimerOn) {
+      const newTimer = {
+        id: id,
+        intervalId: setInterval(() => {
+          setTodoData((data) => {
+            const idx = data.findIndex((elem) => elem.id === id)
+            if (idx == -1) {
+              clearInterval(ref.current)
+              setIsTimerOn(false)
+              return [...data]
+            }
+            const oldItem = data[idx]
+            let newItem = { ...oldItem, seconds: oldItem.seconds - 1 }
+            if (newItem.seconds < 0) {
+              newItem = { ...newItem, minutes: oldItem.minutes - 1, seconds: 59 }
+            }
+            if (newItem.seconds == 0 && newItem.minutes == 0) {
+              clearInterval(newTimer.intervalId)
+              setIsTimerOn(false)
+            }
+            return [...data.slice(0, idx), newItem, ...data.slice(idx + 1)]
+          })
+        }, 1000),
+      }
+      setActiveTimers([...activeTimers, newTimer])
     }
   }
 
-  const onStopTimer = () => {
-    clearInterval(ref.current)
-    setIsTimerOn(false)
+  const onStopTimer = (id) => {
+    const timer = activeTimers.find((timer) => timer.id === id)
+    if (timer) {
+      clearInterval(timer.intervalId)
+      setActiveTimers((prevActiveTimers) => prevActiveTimers.filter((timer) => timer.id !== id))
+    }
   }
-
   const visibleItems = filterItems(search(todoData, term), filter)
   const doneCount = todoData.filter((el) => el.completed).length
   const todoCount = todoData.length - doneCount
