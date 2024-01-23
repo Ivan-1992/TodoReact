@@ -51,6 +51,7 @@ const App = () => {
           return item
         }
       })
+
       return newArray
     })
   }
