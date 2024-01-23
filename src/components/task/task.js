@@ -18,7 +18,6 @@ const Task = ({
 }) => {
   const changeMinutes = minutes > 9 ? Number(minutes) : `0${minutes}`
   const changeSeconds = seconds > 9 ? Number(seconds) : `0${seconds}`
-
   return (
     <li className={completed ? 'completed' : editing ? 'editing' : ''}>
       <div className="view">
