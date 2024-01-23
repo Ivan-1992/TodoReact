@@ -33,6 +33,7 @@ const App = () => {
     setTodoData((prevTodoData) => {
       const newArray = prevTodoData.filter((el) => el.id !== id)
       setIsTimerOn(false)
+      setActiveTimers((prevActiveTimers) => prevActiveTimers.filter((timer) => timer.id !== id))
       return newArray
     })
   }
@@ -51,7 +52,6 @@ const App = () => {
           return item
         }
       })
-
       return newArray
     })
   }
