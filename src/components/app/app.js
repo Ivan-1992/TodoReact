@@ -32,6 +32,7 @@ const App = () => {
   const deleteItem = (id) => {
     setTodoData((prevTodoData) => {
       const newArray = prevTodoData.filter((el) => el.id !== id)
+      setIsTimerOn(false)
       return newArray
     })
   }
